@@ -1,0 +1,8 @@
+PlacementPro_backend/venv/
+PlacementPro_backend/__pycache__/
+PlacementPro_backend/*.pyc
+PlacementPro_backend/media/
+PlacementPro_backend/.env
+PlacementPro_frontend/node_modules/
+PlacementPro_frontend/dist/
+PlacementPro_frontend/.env
