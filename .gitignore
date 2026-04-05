@@ -6,3 +6,6 @@ PlacementPro_backend/.env
 PlacementPro_frontend/node_modules/
 PlacementPro_frontend/dist/
 PlacementPro_frontend/.env
+**/__pycache__/
+*.pyc
+*.pyo
