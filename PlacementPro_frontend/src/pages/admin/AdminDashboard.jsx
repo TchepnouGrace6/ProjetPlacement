@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { Building2, BarChart3, Clock, LogOut } from "lucide-react";
 import { getToken, getRole, deconnexion } from "../../api/auth";
 
 export default function AdminDashboard() {
@@ -56,14 +57,14 @@ export default function AdminDashboard() {
 
   const menuItems = [
     { id: "dashboard", label: "Tableau de bord", icon: "⊞" },
-    { id: "recruteurs", label: "Recruteurs", icon: "🏢" },
+    { id: "recruteurs", label: "Recruteurs", iconComponent: Building2 },
     { id: "candidats", label: "Candidats", icon: "👤" },
     { id: "offres", label: "Offres d'emploi", icon: "📋" },
-    { id: "statistiques", label: "Statistiques", icon: "📊" },
+    { id: "statistiques", label: "Statistiques", iconComponent: BarChart3 },
   ];
 
   const stats = [
-    { label: "Recruteurs en attente", value: recruteurs.length, color: "#f59e0b", bg: "#fef3c7", icon: "⏳" },
+    { label: "Recruteurs en attente", value: recruteurs.length, color: "#f59e0b", bg: "#fef3c7", iconComponent: Clock },
     { label: "Candidats inscrits", value: "—", color: "#1e1b6e", bg: "#eeedfe", icon: "👤" },
     { label: "Offres publiées", value: "—", color: "#0F6E56", bg: "#E1F5EE", icon: "📋" },
     { label: "Recruteurs validés", value: "—", color: "#185FA5", bg: "#E6F1FB", icon: "✅" },
@@ -145,7 +146,7 @@ export default function AdminDashboard() {
               padding: "8px 0"
             }}
           >
-            <span style={{ fontSize: "15px" }}>🚪</span>
+            <span style={{ fontSize: "15px" }}><LogOut size={18} style={{ display: 'inline-block', marginRight: '0.5rem', verticalAlign: 'middle' }} /></span>
             Déconnexion
           </div>
         </div>

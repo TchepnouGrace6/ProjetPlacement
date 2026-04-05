@@ -1,0 +1,284 @@
+/* ==========================================================================
+   PlacementPro — Design System Base
+   Partagé par toutes les pages du dashboard recruteur
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400;1,9..144,600&family=Outfit:wght@300;400;500;600&display=swap');
+
+:root {
+  --cream:        #faf7f2;
+  --cream-mid:    #f0ece4;
+  --cream-deep:   #e8e2d8;
+  --cream-border: rgba(26,37,64,.08);
+  --navy:         #1a2540;
+  --navy-2:       #2d3d60;
+  --terra:        #c4533a;
+  --terra-light:  #f7ede9;
+  --terra-mid:    rgba(196,83,58,.12);
+  --terra-border: rgba(196,83,58,.2);
+  --gold:         #c4a253;
+  --gold-light:   rgba(196,162,83,.1);
+  --text:         #1a2540;
+  --text-2:       #7a8499;
+  --text-3:       #aab0bf;
+  --white:        #ffffff;
+  --success-bg:   #eef7ee;
+  --success-text: #2d6e2d;
+  --warning-bg:   #fef3e2;
+  --warning-text: #9a6200;
+  --danger-bg:    #fceaea;
+  --danger-text:  #a32020;
+  --info-bg:      #e8f0fb;
+  --info-text:    #1a5cbf;
+  --r-xl:         20px;
+  --r-lg:         14px;
+  --r-md:         10px;
+  --r-sm:         7px;
+  --r-pill:       100px;
+  --font-serif:   'Fraunces', Georgia, serif;
+  --font-body:    'Outfit', system-ui, sans-serif;
+  --shadow:       0 1px 3px rgba(26,37,64,.06), 0 4px 16px rgba(26,37,64,.04);
+  --shadow-md:    0 4px 24px rgba(26,37,64,.1);
+}
+
+/* ── PAGE SHELL ─────────────────────────────────────────────── */
+.pp-page {
+  font-family: var(--font-body);
+  background: var(--cream);
+  min-height: 100vh;
+  color: var(--text);
+}
+.pp-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 36px 72px;
+}
+
+/* ── PAGE HEADER ─────────────────────────────────────────────── */
+.pp-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 40px 0 32px;
+  flex-wrap: wrap;
+  border-bottom: .5px solid var(--cream-border);
+  margin-bottom: 32px;
+}
+.pp-header-left {}
+.pp-eyebrow {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--terra);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pp-eyebrow::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--terra);
+}
+.pp-header h1 {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 400;
+  line-height: 1.05;
+  color: var(--navy);
+}
+.pp-header h1 em { font-style: italic; color: var(--terra); }
+.pp-header-sub {
+  font-size: 13px;
+  color: var(--text-2);
+  margin-top: 6px;
+  font-weight: 300;
+}
+
+/* ── BUTTONS ─────────────────────────────────────────────────── */
+.pp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 20px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: all .22s;
+}
+.pp-btn-primary {
+  background: var(--navy);
+  color: var(--cream);
+}
+.pp-btn-primary:hover { background: var(--navy-2); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.pp-btn-terra {
+  background: var(--terra);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(196,83,58,.25);
+}
+.pp-btn-terra:hover { background: #d4644b; transform: translateY(-1px); }
+.pp-btn-ghost {
+  background: transparent;
+  color: var(--text-2);
+  border: .5px solid var(--cream-border);
+}
+.pp-btn-ghost:hover { border-color: rgba(26,37,64,.2); color: var(--navy); background: var(--white); }
+.pp-btn-danger {
+  background: var(--danger-bg);
+  color: var(--danger-text);
+  border: .5px solid rgba(163,32,32,.15);
+}
+.pp-btn-danger:hover { background: #f8d5d5; }
+.pp-btn-sm { padding: 7px 14px; font-size: 12px; }
+
+/* ── BADGES ──────────────────────────────────────────────────── */
+.pp-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: var(--r-sm);
+  white-space: nowrap;
+}
+.pp-badge-green  { background: var(--success-bg); color: var(--success-text); }
+.pp-badge-orange { background: var(--warning-bg); color: var(--warning-text); }
+.pp-badge-red    { background: var(--danger-bg);  color: var(--danger-text); }
+.pp-badge-blue   { background: var(--info-bg);    color: var(--info-text); }
+.pp-badge-gray   { background: var(--cream-mid);  color: var(--text-2); }
+.pp-badge-gold   { background: rgba(196,162,83,.12); color: #7a5a0a; }
+
+/* ── CARD ────────────────────────────────────────────────────── */
+.pp-card {
+  background: var(--white);
+  border: .5px solid var(--cream-border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* ── FILTERS BAR ─────────────────────────────────────────────── */
+.pp-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.pp-select {
+  appearance: none;
+  background: var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a8499' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 12px center;
+  border: .5px solid var(--cream-border);
+  border-radius: var(--r-pill);
+  padding: 8px 36px 8px 16px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color .2s;
+}
+.pp-select:hover { border-color: rgba(26,37,64,.2); }
+.pp-select:focus { outline: none; border-color: var(--terra); }
+
+.pp-filter-count {
+  font-size: 12px;
+  color: var(--text-3);
+  margin-left: auto;
+}
+
+/* ── EMPTY STATE ─────────────────────────────────────────────── */
+.pp-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 80px 24px;
+  text-align: center;
+  background: var(--white);
+  border: .5px solid var(--cream-border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow);
+}
+.pp-empty-icon { font-size: 48px; margin-bottom: 8px; }
+.pp-empty h3 {
+  font-family: var(--font-serif);
+  font-size: 24px;
+  font-weight: 400;
+  color: var(--navy);
+}
+.pp-empty p { font-size: 14px; color: var(--text-2); max-width: 320px; }
+
+/* ── LOADER ──────────────────────────────────────────────────── */
+.pp-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  gap: 16px;
+  color: var(--text-2);
+  font-size: 13px;
+}
+.pp-spin {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid var(--cream-mid);
+  border-top-color: var(--terra);
+  animation: ppspin .7s linear infinite;
+}
+@keyframes ppspin { to { transform: rotate(360deg); } }
+
+/* ── TOAST / ALERT ───────────────────────────────────────────── */
+.pp-alert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: var(--r-lg);
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.pp-alert-error {
+  background: var(--danger-bg);
+  border: .5px solid var(--terra-border);
+  color: var(--terra);
+}
+
+/* ── BACK LINK ───────────────────────────────────────────────── */
+.pp-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: var(--text-2);
+  text-decoration: none;
+  margin-bottom: 28px;
+  margin-top: 24px;
+  transition: color .2s;
+  font-weight: 500;
+}
+.pp-back:hover { color: var(--navy); }
+
+/* ── ANIMATIONS ──────────────────────────────────────────────── */
+@keyframes ppFadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes ppFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.pp-anim-1 { animation: ppFadeUp .4s ease both; }
+.pp-anim-2 { animation: ppFadeUp .4s .08s ease both; }
+.pp-anim-3 { animation: ppFadeUp .4s .16s ease both; }
+.pp-anim-4 { animation: ppFadeUp .4s .24s ease both; }

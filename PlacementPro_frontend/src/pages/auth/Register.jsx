@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { inscriptionCandidat, inscriptionRecruteur } from "../../api/auth";
 import { useNavigate, Link } from "react-router-dom";
+import { User, Building2 } from "lucide-react";
 
 export default function Register() {
   const [role, setRole] = useState("candidat");
@@ -95,12 +96,12 @@ export default function Register() {
           <p className="auth-section-label">Je suis</p>
           <div className="auth-role-grid">
             <div className={`auth-role-card ${role === "candidat" ? "active" : ""}`} onClick={() => setRole("candidat")}>
-              <div className="auth-role-icon">👤</div>
+              <div className="auth-role-icon"><User size={32} /></div>
               <div className="auth-role-name">Candidat</div>
               <div className="auth-role-hint">Je cherche un emploi</div>
             </div>
             <div className={`auth-role-card ${role === "recruteur" ? "active" : ""}`} onClick={() => setRole("recruteur")}>
-              <div className="auth-role-icon">🏢</div>
+              <div className="auth-role-icon"><Building2 size={32} /></div>
               <div className="auth-role-name">Recruteur</div>
               <div className="auth-role-hint">Je recrute des talents</div>
             </div>

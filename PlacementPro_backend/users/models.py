@@ -111,6 +111,7 @@ class Recruteur(models.Model):
     description = models.TextField()
     date_creation_entreprise = models.DateField(blank=True, null=True)
     taille_entreprise = models.CharField(max_length=50)
+    logo = models.ImageField(upload_to='documents/recruteurs/logos/', blank=True, null=True)
 
     # Documents de certification
     registre_commerce = models.FileField(upload_to='documents/recruteurs/')
@@ -124,3 +125,106 @@ class Recruteur(models.Model):
 
     def __str__(self):
         return self.nom_entreprise
+
+
+class Annonce(models.Model):
+    STATUT_CHOICES = [
+        ('brouillon', 'Brouillon'),
+        ('publiee', 'Publiée'),
+        ('fermee', 'Fermée'),
+        ('archivee', 'Archivée'),
+    ]
+    
+    TYPE_CONTRAT_CHOICES = [
+        ('cdi', 'CDI'),
+        ('cdd', 'CDD'),
+        ('stage', 'Stage'),
+        ('alternance', 'Alternance'),
+        ('freelance', 'Freelance'),
+    ]
+    
+    # Lien avec le recruteur
+    recruteur = models.ForeignKey(Recruteur, on_delete=models.CASCADE, related_name='annonces')
+    
+    # Informations générales
+    titre = models.CharField(max_length=200)
+    description = models.TextField()
+    competences_requises = models.TextField(help_text="Compétences nécessaires, séparées par des virgules")
+    qualifications = models.TextField(blank=True, help_text="Formations/diplômes requis")
+    
+    # Détails du poste
+    secteur_activite = models.CharField(max_length=100)
+    localisation = models.CharField(max_length=150)
+    type_contrat = models.CharField(max_length=20, choices=TYPE_CONTRAT_CHOICES)
+    salaire_min = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    salaire_max = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    date_debut = models.DateField()
+    
+    # Statut et dates
+    statut = models.CharField(max_length=20, choices=STATUT_CHOICES, default='brouillon')
+    date_creation = models.DateTimeField(auto_now_add=True)
+    date_publication = models.DateTimeField(blank=True, null=True)
+    date_fermeture = models.DateTimeField(blank=True, null=True)
+    date_modification = models.DateTimeField(auto_now=True)
+    
+    # Visibilité
+    nombre_postes = models.IntegerField(default=1)
+    visible = models.BooleanField(default=True)
+    
+    class Meta:
+        ordering = ['-date_creation']
+    
+    def __str__(self):
+        return f"{self.titre} - {self.recruteur.nom_entreprise}"
+
+
+class Candidature(models.Model):
+    STATUT_CHOICES = [
+        ('soumise', 'Soumise'),
+        ('acceptee', 'Acceptée'),
+        ('rejetee', 'Rejetée'),
+        ('en_attente', 'En attente'),
+        ('shortlistee', 'Shortlistée'),
+        ('acceptee_offre', 'Offre acceptée'),
+    ]
+    
+    # Liens
+    annonce = models.ForeignKey(Annonce, on_delete=models.CASCADE, related_name='candidatures')
+    candidat = models.ForeignKey(Candidat, on_delete=models.CASCADE, related_name='candidatures')
+    
+    # Statut et notes
+    statut = models.CharField(max_length=20, choices=STATUT_CHOICES, default='soumise')
+    notes_recruteur = models.TextField(blank=True)
+    note_score = models.IntegerField(blank=True, null=True, help_text="Score de 0 à 5")
+    
+    # Dates
+    date_soumission = models.DateTimeField(auto_now_add=True)
+    date_dernier_traitement = models.DateTimeField(auto_now=True)
+    
+    # Lettre de motivation
+    lettre_motivation = models.TextField(blank=True)
+    
+    class Meta:
+        unique_together = ('annonce', 'candidat')
+        ordering = ['-date_soumission']
+    
+    def __str__(self):
+        return f"{self.candidat} - {self.annonce.titre} ({self.statut})"
+
+
+class Favori(models.Model):
+    """Modèle pour la shortlist/favoris des recruteurs"""
+    
+    recruteur = models.ForeignKey(Recruteur, on_delete=models.CASCADE, related_name='favoris')
+    candidat = models.ForeignKey(Candidat, on_delete=models.CASCADE, related_name='favoris_recruteur')
+    
+    raison = models.TextField(blank=True, help_text="Raison du favori")
+    date_ajout = models.DateTimeField(auto_now_add=True)
+    date_modification = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        unique_together = ('recruteur', 'candidat')
+        ordering = ['-date_ajout']
+    
+    def __str__(self):
+        return f"{self.recruteur.nom_entreprise} - {self.candidat}"

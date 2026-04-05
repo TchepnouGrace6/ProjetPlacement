@@ -92,16 +92,8 @@ WSGI_APPLICATION = 'PlacementPro_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-     'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'placementpro',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'OPTIONS': {
-            'charset': 'utf8mb4',
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'; SET NAMES utf8mb4 ; SET SESSION innodb_strict_mode=1;",
-        },
+     'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 

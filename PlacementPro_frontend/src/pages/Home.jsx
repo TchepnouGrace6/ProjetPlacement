@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Target, Lock, Mail } from "lucide-react";
 
 const offresRecentes = [
   { id: 1, poste: "Développeur Full Stack React/Django", entreprise: "Orange Cameroun", ville: "Douala", type: "CDI", date: "Il y a 2 jours", logo: "OC", couleur: "#FF6600" },
@@ -275,16 +276,16 @@ export default function Home() {
               </p>
               <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
                 {[
-                  { icon: "🎯", titre: "Matching intelligent", desc: "Algorithme d'analyse multicritères pour des opportunités ciblées" },
-                  { icon: "🔒", titre: "Entreprises vérifiées", desc: "Chaque recruteur est validé manuellement par notre équipe" },
-                  { icon: "📧", titre: "Suivi en temps réel", desc: "Notifications email à chaque étape de votre candidature" },
+                  { icon: Target, titre: "Matching intelligent", desc: "Algorithme d'analyse multicritères pour des opportunités ciblées" },
+                  { icon: Lock, titre: "Entreprises vérifiées", desc: "Chaque recruteur est validé manuellement par notre équipe" },
+                  { icon: Mail, titre: "Suivi en temps réel", desc: "Notifications email à chaque étape de votre candidature" },
                 ].map((item) => (
                   <div key={item.titre} style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
                     <div style={{
                       width: "40px", height: "40px", minWidth: "40px", borderRadius: "10px",
                       background: "#eeedfe", display: "flex", alignItems: "center",
                       justifyContent: "center", fontSize: "18px"
-                    }}>{item.icon}</div>
+                    }}><item.icon size={20} color="#7c3aed" /></div>
                     <div>
                       <div style={{ fontSize: "14px", fontWeight: "600", color: "#212529", marginBottom: "2px" }}>{item.titre}</div>
                       <div style={{ fontSize: "13px", color: "#6c757d" }}>{item.desc}</div>

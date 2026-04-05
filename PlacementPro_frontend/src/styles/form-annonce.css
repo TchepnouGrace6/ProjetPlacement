@@ -1,0 +1,154 @@
+/* form-annonce.css — Formulaire annonce */
+
+.pp-form-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 20px;
+  align-items: start;
+}
+@media (max-width: 900px) { .pp-form-layout { grid-template-columns: 1fr; } }
+
+/* SECTION CARD */
+.pp-form-section {
+  background: var(--white);
+  border: .5px solid var(--cream-border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 16px;
+  transition: box-shadow .2s;
+}
+.pp-form-section:focus-within {
+  box-shadow: 0 0 0 2px rgba(196,83,58,.15), var(--shadow);
+}
+
+.pp-form-section-head {
+  padding: 18px 24px 14px;
+  border-bottom: .5px solid var(--cream-mid);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pp-form-section-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--terra);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.pp-form-section-title {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--navy);
+}
+
+.pp-form-body { padding: 20px 24px; }
+
+/* FIELD */
+.pp-field { margin-bottom: 18px; }
+.pp-field:last-child { margin-bottom: 0; }
+.pp-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  color: var(--text-2);
+  margin-bottom: 7px;
+}
+.pp-label .req { color: var(--terra); margin-left: 2px; }
+
+.pp-input, .pp-textarea, .pp-select-field {
+  width: 100%;
+  background: var(--cream);
+  border: .5px solid var(--cream-border);
+  border-radius: var(--r-lg);
+  padding: 11px 14px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--text);
+  transition: border-color .2s, background .2s, box-shadow .2s;
+  outline: none;
+  appearance: none;
+  pointer-events: auto !important;
+  cursor: text;
+  -webkit-user-select: text;
+  user-select: text;
+}
+.pp-input, .pp-textarea {
+  resize: vertical;
+}
+.pp-input:hover, .pp-textarea:hover, .pp-select-field:hover {
+  border-color: rgba(26,37,64,.18);
+  background: #f5f2ec;
+}
+.pp-input:focus, .pp-textarea:focus, .pp-select-field:focus {
+  border-color: var(--terra);
+  background: var(--white);
+  box-shadow: 0 0 0 3px var(--terra-mid);
+  outline: 2px solid var(--terra);
+  outline-offset: 0px;
+}
+.pp-input::placeholder, .pp-textarea::placeholder { color: var(--text-3); }
+
+.pp-textarea { 
+  resize: vertical; 
+  min-height: 100px; 
+  line-height: 1.55;
+}
+
+.pp-select-field {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a8499' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.pp-form-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+}
+
+/* SIDEBAR CARD */
+.pp-sidebar-card {
+  background: var(--white);
+  border: .5px solid var(--cream-border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow);
+  padding: 22px;
+  position: sticky;
+  top: 24px;
+}
+.pp-sidebar-card h3 {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--navy);
+  margin-bottom: 16px;
+}
+.pp-sidebar-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+.pp-sidebar-sep {
+  height: .5px;
+  background: var(--cream-mid);
+  margin: 16px 0;
+}
+.pp-sidebar-tip {
+  font-size: 12px;
+  color: var(--text-3);
+  line-height: 1.5;
+}
+.pp-sidebar-tip strong { color: var(--text-2); font-weight: 600; }

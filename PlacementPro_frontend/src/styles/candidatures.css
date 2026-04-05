@@ -1,0 +1,99 @@
+/* candidatures.css */
+
+.pp-cand-table-wrap {
+  background: var(--white);
+  border: .5px solid var(--cream-border);
+  border-radius: var(--r-xl);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.pp-cand-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.pp-cand-table thead tr {
+  background: var(--cream);
+  border-bottom: .5px solid var(--cream-mid);
+}
+.pp-cand-table thead th {
+  padding: 13px 18px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-2);
+  text-align: left;
+  white-space: nowrap;
+}
+.pp-cand-table tbody tr {
+  border-bottom: .5px solid var(--cream-mid);
+  transition: background .15s;
+  animation: ppFadeUp .3s ease both;
+  cursor: pointer;
+}
+.pp-cand-table tbody tr:last-child { border-bottom: none; }
+.pp-cand-table tbody tr:hover { background: rgba(250,247,242,.7); }
+
+.pp-cand-table td {
+  padding: 14px 18px;
+  font-size: 13px;
+  color: var(--text);
+  vertical-align: middle;
+}
+
+.pp-cand-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--navy-2), var(--navy));
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.pp-cand-name-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.pp-cand-name { font-weight: 600; color: var(--navy); }
+.pp-cand-email { font-size: 12px; color: var(--text-3); }
+
+.pp-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: var(--r-sm);
+}
+.pp-score-5 { background: var(--success-bg); color: var(--success-text); }
+.pp-score-4 { background: #eef5f0; color: #3a6e50; }
+.pp-score-3 { background: var(--warning-bg); color: var(--warning-text); }
+.pp-score-2 { background: #fef0e6; color: #8a4a00; }
+.pp-score-1 { background: var(--danger-bg); color: var(--danger-text); }
+.pp-score-none { color: var(--text-3); }
+
+.pp-cand-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--terra);
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: var(--r-pill);
+  border: .5px solid var(--terra-border);
+  transition: all .18s;
+}
+.pp-cand-link:hover {
+  background: var(--terra);
+  color: #fff;
+  border-color: var(--terra);
+}
