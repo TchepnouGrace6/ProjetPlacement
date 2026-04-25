@@ -194,4 +194,4 @@ CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
 # Anthropic
 #GEMINI_API_KEY = 'AIzaSyAsWtCNDcJ72e72tWYdC75AVWuYTmxgqt0' # ← remplace par ta vraie clé
 
-GROQ_API_KEY = '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'  # ta clé Groq ici
+GROQ_API_KEY = ''  # ta clé Groq ici
