@@ -22,13 +22,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-16o9#a&b^ch*c)fppj7^f4c#)q2x=rp40#2fsgyie=-)g3w(-w'
+#SECRET_KEY = 'django-insecure-16o9#a&b^ch*c)fppj7^f4c#)q2x=rp40#2fsgyie=-)g3w(-w'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
 
-ALLOWED_HOSTS = []
+#ALLOWED_HOSTS = []
 
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-16o9#a&b...')
+DEBUG = os.environ.get('DJANGO_DEBUG', 'True') == 'True'
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 # Application definition
 
@@ -93,11 +97,16 @@ WSGI_APPLICATION = 'PlacementPro_backend.wsgi.application'
 DATABASES = {
    'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'placementpro',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        #'NAME': 'placementpro',
+        #'USER': 'root',
+        #'PASSWORD': '',
+        #'HOST': 'localhost',
+        #'PORT': '3306',
+        'NAME': os.environ.get('DB_NAME', 'placementpro'),
+        'USER': os.environ.get('DB_USER', 'root'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', ''),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
         'OPTIONS': {
             'charset': 'utf8mb4',
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'; SET NAMES utf8mb4; SET SESSION innodb_strict_mode=1;",
@@ -156,8 +165,10 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
-EMAIL_HOST_USER = 'grace6tchepnou@gmail.com'
-EMAIL_HOST_PASSWORD = 'hfrv gsuq otrm gsfj'
+#EMAIL_HOST_USER = 'grace6tchepnou@gmail.com'
+#EMAIL_HOST_PASSWORD = 'hfrv gsuq otrm gsfj'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'grace6tchepnou@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'hfrv gsuq otrm gsfj')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_SSL_CERTFILE = None
 EMAIL_SSL_KEYFILE = None
@@ -176,15 +187,17 @@ SIMPLE_JWT = {
     'USER_ID_CLAIM': 'user_id',
     'USER_AUTHENTICATION_RULE': 'rest_framework_simplejwt.authentication.default_user_authentication_rule',
 }
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5173',
-]
+#CORS_ALLOWED_ORIGINS = [
+   # 'http://localhost:5173',
+#]
+CORS_ALLOWED_ORIGINS = os.environ.get('CORS_ALLOWED_ORIGINS', 'http://localhost:5173').split(',')
 # ── À AJOUTER dans ton settings.py ──
 
 INSTALLED_APPS += ['django_celery_results']
 
 # Celery
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
+#CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379/0')
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_CACHE_BACKEND = 'default'
 CELERY_ACCEPT_CONTENT = ['json']

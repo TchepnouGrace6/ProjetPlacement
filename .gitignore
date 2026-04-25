@@ -9,3 +9,4 @@ PlacementPro_frontend/.env
 **/__pycache__/
 *.pyc
 *.pyo
+.env
