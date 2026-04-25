@@ -91,10 +91,18 @@ WSGI_APPLICATION = 'PlacementPro_backend.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-     'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+   'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'placementpro',
+        'USER': 'root',
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'; SET NAMES utf8mb4; SET SESSION innodb_strict_mode=1;",
+        },
+   }
 }
 
 
@@ -171,3 +179,19 @@ SIMPLE_JWT = {
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
 ]
+# ── À AJOUTER dans ton settings.py ──
+
+INSTALLED_APPS += ['django_celery_results']
+
+# Celery
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'default'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+
+# Anthropic
+#GEMINI_API_KEY = 'AIzaSyAsWtCNDcJ72e72tWYdC75AVWuYTmxgqt0' # ← remplace par ta vraie clé
+
+GROQ_API_KEY = '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'  # ta clé Groq ici

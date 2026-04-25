@@ -5,6 +5,7 @@ from .views import (
     ConnexionView,
     ValidationRecruteurView,
     ListeRecruteursEnAttenteView,
+    ProfilCandidatView,
     CreationAdminView
 )
 

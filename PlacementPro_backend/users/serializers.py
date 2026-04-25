@@ -32,6 +32,7 @@ class InscriptionRecruteurSerializer(serializers.ModelSerializer):
     registre_commerce = serializers.FileField()
     certificat_immatriculation = serializers.FileField()
     patente = serializers.FileField()
+    logo = serializers.ImageField()
 
     class Meta:
         model = User
@@ -40,7 +41,7 @@ class InscriptionRecruteurSerializer(serializers.ModelSerializer):
             'nom_entreprise', 'secteur_activite', 'localisation',
             'ville', 'adresse', 'telephone', 'description',
             'taille_entreprise', 'registre_commerce',
-            'certificat_immatriculation', 'patente'
+            'certificat_immatriculation', 'patente', 'logo'
         ]
 
     def create(self, validated_data):
@@ -48,7 +49,7 @@ class InscriptionRecruteurSerializer(serializers.ModelSerializer):
             'nom_entreprise', 'secteur_activite', 'localisation',
             'ville', 'adresse', 'telephone', 'description',
             'taille_entreprise', 'registre_commerce',
-            'certificat_immatriculation', 'patente'
+            'certificat_immatriculation', 'patente', 'logo'
         ]
         recruteur_data = {}
         for field in recruteur_fields:
@@ -77,7 +78,6 @@ class UserSerializer(serializers.ModelSerializer):
 
 
 class RecruteurProfileSerializer(serializers.ModelSerializer):
-    """Serializer pour le profil du recruteur avec logo"""
     class Meta:
         model = Recruteur
         fields = [
@@ -87,30 +87,34 @@ class RecruteurProfileSerializer(serializers.ModelSerializer):
         ]
 
 
-# ========== Serializers pour Annonc ==========
-
 class AnnonceListSerializer(serializers.ModelSerializer):
-    """Serializer pour lister les annonces avec infos basiques"""
     nom_entreprise = serializers.CharField(source='recruteur.nom_entreprise', read_only=True)
     nombre_candidatures = serializers.SerializerMethodField()
-    
+    logo = serializers.SerializerMethodField()
+
     class Meta:
         model = Annonce
         fields = [
             'id', 'titre', 'description', 'secteur_activite', 'localisation',
             'type_contrat', 'salaire_min', 'salaire_max', 'date_debut',
-            'statut', 'date_publication', 'nom_entreprise', 'nombre_candidatures'
+            'statut', 'date_publication', 'nom_entreprise', 'nombre_candidatures', 'logo'
         ]
-    
+
     def get_nombre_candidatures(self, obj):
         return obj.candidatures.count()
 
+    def get_logo(self, obj):
+        request = self.context.get('request')
+        if obj.recruteur.logo:
+            return request.build_absolute_uri(obj.recruteur.logo.url)
+        return None
+
 
 class AnnonceDetailSerializer(serializers.ModelSerializer):
-    """Serializer détaillé pour une annonce"""
     nom_entreprise = serializers.CharField(source='recruteur.nom_entreprise', read_only=True)
     nombre_candidatures = serializers.SerializerMethodField()
-    
+    logo = serializers.SerializerMethodField()
+
     class Meta:
         model = Annonce
         fields = [
@@ -118,16 +122,20 @@ class AnnonceDetailSerializer(serializers.ModelSerializer):
             'qualifications', 'secteur_activite', 'localisation',
             'type_contrat', 'salaire_min', 'salaire_max', 'date_debut',
             'nombre_postes', 'statut', 'date_creation', 'date_publication',
-            'date_fermeture', 'nom_entreprise', 'nombre_candidatures', 'visible'
+            'date_fermeture', 'nom_entreprise', 'nombre_candidatures', 'visible', 'logo'
         ]
-    
+
     def get_nombre_candidatures(self, obj):
         return obj.candidatures.count()
 
+    def get_logo(self, obj):
+        request = self.context.get('request')
+        if request and obj.recruteur.logo:
+            return request.build_absolute_uri(obj.recruteur.logo.url)
+        return None
+
 
 class AnnonceCreateUpdateSerializer(serializers.ModelSerializer):
-    """Serializer pour créer/modifier une annonce"""
-    
     class Meta:
         model = Annonce
         fields = [
@@ -137,38 +145,32 @@ class AnnonceCreateUpdateSerializer(serializers.ModelSerializer):
         ]
 
 
-# ========== Serializers pour Candidature ==========
-
 class CandidatureCandidatSerializer(serializers.ModelSerializer):
-    """Info du candidat pour une candidature"""
-    
     class Meta:
         model = Candidat
-        fields = ['id', 'nom', 'prenom', 'telephone', 'email']
+        fields = ['id', 'nom', 'prenom', 'telephone']
 
 
 class CandidatureListSerializer(serializers.ModelSerializer):
-    """Liste des candidatures avec infos essentielles"""
     candidat_nom = serializers.SerializerMethodField()
     candidat_email = serializers.CharField(source='candidat.user.email', read_only=True)
     annonce_titre = serializers.CharField(source='annonce.titre', read_only=True)
-    
+
     class Meta:
         model = Candidature
         fields = [
             'id', 'annonce_titre', 'candidat_nom', 'candidat_email',
             'statut', 'date_soumission', 'date_dernier_traitement', 'note_score'
         ]
-    
+
     def get_candidat_nom(self, obj):
         return f"{obj.candidat.prenom} {obj.candidat.nom}"
 
 
 class CandidatureDetailSerializer(serializers.ModelSerializer):
-    """Détail d'une candidature"""
     candidat_info = serializers.SerializerMethodField()
     annonce_titre = serializers.CharField(source='annonce.titre', read_only=True)
-    
+
     class Meta:
         model = Candidature
         fields = [
@@ -176,7 +178,7 @@ class CandidatureDetailSerializer(serializers.ModelSerializer):
             'notes_recruteur', 'note_score', 'lettre_motivation',
             'date_soumission', 'date_dernier_traitement'
         ]
-    
+
     def get_candidat_info(self, obj):
         candidat = obj.candidat
         return {
@@ -190,40 +192,35 @@ class CandidatureDetailSerializer(serializers.ModelSerializer):
             'competences': candidat.competences,
             'cv': candidat.cv.url if candidat.cv else None,
             'diplome': candidat.diplome.url if candidat.diplome else None,
+            'photo_profil': candidat.photo_profil.url if candidat.photo_profil else None,
         }
 
 
 class CandidatureUpdateSerializer(serializers.ModelSerializer):
-    """Serializer pour mettre à jour une candidature"""
-    
     class Meta:
         model = Candidature
         fields = ['statut', 'notes_recruteur', 'note_score']
 
 
-# ========== Serializers pour Favori ==========
-
 class FavoriListSerializer(serializers.ModelSerializer):
-    """Liste des favoris"""
     candidat_nom = serializers.SerializerMethodField()
     candidat_email = serializers.CharField(source='candidat.user.email', read_only=True)
-    
+
     class Meta:
         model = Favori
         fields = ['id', 'candidat_nom', 'candidat_email', 'raison', 'date_ajout']
-    
+
     def get_candidat_nom(self, obj):
         return f"{obj.candidat.prenom} {obj.candidat.nom}"
 
 
 class FavoriDetailSerializer(serializers.ModelSerializer):
-    """Détail d'un favori"""
     candidat_info = serializers.SerializerMethodField()
-    
+
     class Meta:
         model = Favori
         fields = ['id', 'candidat_info', 'raison', 'date_ajout', 'date_modification']
-    
+
     def get_candidat_info(self, obj):
         candidat = obj.candidat
         return {
@@ -236,12 +233,37 @@ class FavoriDetailSerializer(serializers.ModelSerializer):
             'secteur': candidat.secteur_activite,
             'competences': candidat.competences,
             'cv': candidat.cv.url if candidat.cv else None,
+            'photo_profil': candidat.photo_profil.url if candidat.photo_profil else None,
         }
 
 
 class FavoriCreateSerializer(serializers.ModelSerializer):
-    """Serializer pour ajouter/modifier un favori"""
-    
     class Meta:
         model = Favori
         fields = ['candidat', 'raison']
+
+
+class CandidatProfilSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Candidat
+        fields = [
+            'nom', 'prenom', 'date_naissance', 'sexe', 'nationalite',
+            'telephone', 'ville', 'statut_matrimonial', 'handicap',
+            'langue_parlee', 'secteur_activite', 'dernier_poste',
+            'derniere_entreprise', 'competences',
+            'cv', 'diplome', 'lettre_motivation', 'piece_identite',
+            'photo_profil', 'profil_complete',
+        ]
+
+    def create(self, validated_data):
+        validated_data['profil_complete'] = True
+        user = validated_data.pop('user', None)
+        return Candidat.objects.create(user=user, **validated_data)
+
+    def update(self, instance, validated_data):
+        validated_data['profil_complete'] = True
+        validated_data.pop('user', None)
+        for attr, val in validated_data.items():
+            setattr(instance, attr, val)
+        instance.save()
+        return instance

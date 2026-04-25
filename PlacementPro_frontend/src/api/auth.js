@@ -17,12 +17,22 @@ export const connexion = (data) => {
 };
 
 export const sauvegarderToken = (access, refresh, role, email) => {
-    localStorage.setItem('access', access);
-    localStorage.setItem('refresh', refresh);
+    localStorage.setItem('access_token', access);   // ✅ corrigé
+    localStorage.setItem('refresh_token', refresh);
     localStorage.setItem('role', role);
     localStorage.setItem('email', email);
 };
 
-export const getToken = () => localStorage.getItem('access');
+export const getToken = () => {
+    const token = localStorage.getItem('access_token'); // ✅ corrigé
+    if (!token || token === 'null' || token === 'undefined') return null;
+    return token;
+};
 export const getRole = () => localStorage.getItem('role');
-export const deconnexion = () => localStorage.clear();
+
+export const deconnexion = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('role');
+    localStorage.removeItem('email');
+};

@@ -2,17 +2,17 @@ import axios from 'axios';
 
 const API_URL = 'http://127.0.0.1:8000/api/auth';
 
-// Helper pour obtenir le token
+// ✅ CORRECTION : clé 'access_token' (et non 'access')
 const getAuthHeaders = () => ({
     headers: {
-        'Authorization': `Bearer ${localStorage.getItem('access')}`,
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         'Content-Type': 'application/json'
     }
 });
 
 const getMultipartHeaders = () => ({
     headers: {
-        'Authorization': `Bearer ${localStorage.getItem('access')}`,
+        'Authorization': `Bearer ${localStorage.getItem('access_token')}`,
         'Content-Type': 'multipart/form-data'
     }
 });
@@ -24,7 +24,7 @@ export const getAnnonces = (filters = {}) => {
     if (filters.secteur) params.append('secteur', filters.secteur);
     if (filters.localisation) params.append('localisation', filters.localisation);
     if (filters.type_contrat) params.append('type_contrat', filters.type_contrat);
-    
+
     return axios.get(
         `${API_URL}/annonces/?${params.toString()}`,
         { headers: { 'Content-Type': 'application/json' } }
@@ -67,23 +67,15 @@ export const getRecruteurProfile = () => {
 
 export const updateRecruteurProfile = (data) => {
     const formData = new FormData();
-    
-    // Ajouter tous les champs
     for (const key in data) {
         if (data[key] !== null && data[key] !== undefined) {
             formData.append(key, data[key]);
         }
     }
-    
     return axios.put(
         `${API_URL}/recruteur/profile/`,
         formData,
-        {
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem('access')}`,
-                'Content-Type': 'multipart/form-data'
-            }
-        }
+        getMultipartHeaders()
     );
 };
 
