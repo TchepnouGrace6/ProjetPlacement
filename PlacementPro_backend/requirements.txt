@@ -16,7 +16,7 @@ click-repl==0.3.0
 colorama==0.4.6
 cryptography==46.0.7
 distro==1.9.0
-Django==6.0.3
+Django==5.0.6
 django-celery-results==2.5.1
 django-cors-headers==4.9.0
 djangorestframework==3.17.1
