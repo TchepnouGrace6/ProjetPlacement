@@ -425,7 +425,7 @@ export default function Home() {
       <section style={{
         minHeight: "100vh", position: "relative", overflow: "hidden",
         display: "flex", alignItems: "center",
-        background: "linear-gradient(135deg, #0a0f28 0%, #0d1b4b 40%, #0f2a6e 70%, #1a3a8f 100%)"
+        background: "linear-gradient(135deg, #4a0000 0%, #7b0000 40%, #b71c1c 70%, #c62828 100%)"
       }}>
         <div style={{ position: "absolute", inset: 0, background: "url('/src/assets/background.png') center/cover no-repeat", opacity: 0.8 }} />
         <div style={{ position: "absolute", inset: 0, background: "linear-gradient(90deg, rgba(10,15,40,0.95) 0%, rgba(10,15,40,0.7) 25%, rgba(10,15,40,0.3) 100%)" }} />
