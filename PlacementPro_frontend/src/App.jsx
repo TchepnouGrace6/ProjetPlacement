@@ -13,8 +13,10 @@ import CandidatureDetail from "./pages/recruiter/CandidatureDetail";
 import FavorisList from "./pages/recruiter/FavorisList";
 import ProtectedRoute from "./components/ProtectedRoute";
 import OffreDetail from "./pages/OffreDetail";
-import PostulerForm from "./pages/candidat/PostulerForm";
-import CandidatDashboard from "./pages/candidat/CandidatDashboard";
+/*import PostulerForm from "./pages/candidat/PostulerForm";
+import CandidatDashboard from "./pages/candidat/CandidatDashboard";*/
+import PostulerForm from "./pages/candidat/Postulerform";
+import CandidatDashboard from "./pages/candidat/Candidatdashboard";
 import Navbar from "./components/Navbar";
 import Toast from "./components/Toast";
 import FAQ from "./pages/Faq";

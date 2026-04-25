@@ -22,7 +22,7 @@ jobs:
         with:
           python-version: "3.11"
           cache: "pip"
-          cache-dependency-path: PlacementPro_backend/requirements.txt
+          
 
       - name: "📦 Installation des dépendances"
         working-directory: PlacementPro_backend
