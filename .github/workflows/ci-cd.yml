@@ -2,9 +2,9 @@ name: "🚀 CI/CD Pipeline - PlacementPro"
 
 on:
   push:
-    branches: [main]
+    branches: [main, feature/recruteurs]
   pull_request:
-    branches: [main]
+    branches: [main, feature/recruteurs]
 
 jobs:
 
